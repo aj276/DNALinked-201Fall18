@@ -126,8 +126,6 @@ public class LinkStrand implements IDnaStrand {
 	{
 		if (myFirst==null)
 			return "";
-		if (myLast == null)
-			return myFirst.info;
 		Node n = myFirst;
 		StringBuilder s = new StringBuilder(myFirst.info);
 		n = n.next;

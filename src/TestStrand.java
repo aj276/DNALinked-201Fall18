@@ -85,6 +85,7 @@ public class TestStrand {
 		}
 		IDnaStrand s = getNewStrand("aaba");
 		s.append("cccdc");
+		s.append("ffrf");
 		System.out.println(s.reverse());
 	}
 
