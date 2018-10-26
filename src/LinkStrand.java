@@ -77,6 +77,7 @@ public class LinkStrand implements IDnaStrand {
 		LinkStrand answer1 = new LinkStrand(s.reverse().toString());
 		if (myFirst.next==null)
 			return answer1;
+		n=n.next;
 		while (n!=null)
 		{
 			s = new StringBuilder(n.info);
@@ -98,15 +99,23 @@ public class LinkStrand implements IDnaStrand {
 	@Override
 	public char charAt(int index) {
 		// TODO Auto-generated method stub
+		if (myIndex>index)
+		{
+			myIndex=0;
+			myLocalIndex=0;
+			myCurrent = myFirst;
+		}
 		if (index==0)
 			return myCurrent.info.charAt(0);
+		if (index>=mySize||index<0)
+			throw new IndexOutOfBoundsException();
 		
 		while (myIndex != index) {
 			myIndex++;
 			myLocalIndex++;
 			if (myCurrent==null)
-				throw new IndexOutOfBoundsException();
-			if (myLocalIndex > myCurrent.info.length()) {
+				return 'n';
+			if (myLocalIndex >= myCurrent.info.length()) {
 				myLocalIndex = 0;
 				myCurrent = myCurrent.next;
 			}
