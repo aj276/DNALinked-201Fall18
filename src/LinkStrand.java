@@ -75,14 +75,16 @@ public class LinkStrand implements IDnaStrand {
 		Node n = myFirst;
 		StringBuilder s = new StringBuilder(myFirst.info);
 		LinkStrand answer1 = new LinkStrand(s.reverse().toString());
-		if (myFirst.next==null)
-			return answer1;
 		n=n.next;
+		if (n!=null)
+			answer1.myLast = answer1.myFirst;
 		while (n!=null)
 		{
 			s = new StringBuilder(n.info);
 			LinkStrand answer = new LinkStrand(s.reverse().toString());
+			
 			answer.myFirst.next = answer1.myFirst;
+			answer.myLast = answer1.myLast;
 			answer1 = answer;
 			n = n.next;
 		}

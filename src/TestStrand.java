@@ -83,6 +83,9 @@ public class TestStrand {
 			assertEquals("This test checks if reverse works correctly for "
 					+ "simple cases. The test case failed on was " + s, rev.toString(), rs);
 		}
+		IDnaStrand s = getNewStrand("aaba");
+		s.append("cccdc");
+		System.out.println(s.reverse());
 	}
 
 	@Test(timeout = 10000)
