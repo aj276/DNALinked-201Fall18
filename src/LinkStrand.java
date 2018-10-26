@@ -83,8 +83,11 @@ public class LinkStrand implements IDnaStrand {
 			
 			answer.myFirst.next = answer1.myFirst;
 			answer1 = answer;
+			
 			n = n.next;
 		}
+		answer1.myAppends = myAppends;
+		answer1.mySize = mySize;
 		return answer1;
 	}
 
