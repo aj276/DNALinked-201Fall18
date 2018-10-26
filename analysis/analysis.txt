@@ -5,3 +5,128 @@ Questions here will come from the assignment
 writeup. Be sure to copy paste questions and 
 your explanations before you push to GitHub and
 do that before uploading to Gradescope
+
+Benchmark Results:
+
+StringStrand:
+
+dna length = 4,639,221
+cutting at enzyme gaattc
+-----
+Class	                splicee	      recomb	time	appends
+-----
+StringStrand:	            256	      4,800,471	0.424	1290
+StringStrand:	            512	      4,965,591	0.394	1290
+StringStrand:	          1,024	      5,295,831	0.456	1290
+StringStrand:	          2,048	      5,956,311	0.524	1290
+StringStrand:	          4,096	      7,277,271	0.566	1290
+StringStrand:	          8,192	      9,919,191	0.820	1290
+StringStrand:	         16,384	     15,203,031	1.351	1290
+StringStrand:	         32,768	     25,770,711	2.285	1290
+StringStrand:	         65,536	     46,906,071	4.332	1290
+StringStrand:	        131,072	     89,176,791	10.501	1290
+StringStrand:	        262,144	    173,718,231	22.505	1290
+StringStrand:	        524,288	    342,801,111	44.854	1290
+StringStrand:	      1,048,576	    680,966,871	87.849	1290
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at StringStrand.append(StringStrand.java:70)
+	at IDnaStrand.cutAndSplice(IDnaStrand.java:37)
+	at DNABenchmark.strandSpliceBenchmark(DNABenchmark.java:67)
+	at DNABenchmark.main(DNABenchmark.java:113)
+
+StringBuilder Strand:
+
+dna length = 4,639,221
+cutting at enzyme gaattc
+-----
+Class	                splicee	      recomb	time	appends
+-----
+StringBuilderStrand:	            256	      4,800,471	0.025	1290
+StringBuilderStrand:	            512	      4,965,591	0.022	1290
+StringBuilderStrand:	          1,024	      5,295,831	0.008	1290
+StringBuilderStrand:	          2,048	      5,956,311	0.008	1290
+StringBuilderStrand:	          4,096	      7,277,271	0.006	1290
+StringBuilderStrand:	          8,192	      9,919,191	0.009	1290
+StringBuilderStrand:	         16,384	     15,203,031	0.009	1290
+StringBuilderStrand:	         32,768	     25,770,711	0.022	1290
+StringBuilderStrand:	         65,536	     46,906,071	0.053	1290
+StringBuilderStrand:	        131,072	     89,176,791	0.073	1290
+StringBuilderStrand:	        262,144	    173,718,231	0.169	1290
+StringBuilderStrand:	        524,288	    342,801,111	0.299	1290
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at java.base/java.util.Arrays.copyOf(Arrays.java:3744)
+	at java.base/java.lang.AbstractStringBuilder.ensureCapacityInternal(AbstractStringBuilder.java:146)
+	at java.base/java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:512)
+	at java.base/java.lang.StringBuilder.append(StringBuilder.java:141)
+	at StringBuilderStrand.append(StringBuilderStrand.java:70)
+	at IDnaStrand.cutAndSplice(IDnaStrand.java:41)
+	at DNABenchmark.strandSpliceBenchmark(DNABenchmark.java:67)
+	at DNABenchmark.main(DNABenchmark.java:113)
+
+
+LinkStrand:
+
+
+dna length = 4,639,221
+cutting at enzyme gaattc
+-----
+Class	                splicee	      recomb	time	appends
+-----
+LinkStrand:	            256	      4,800,471	0.020	1290
+LinkStrand:	            512	      4,965,591	0.019	1290
+LinkStrand:	          1,024	      5,295,831	0.004	1290
+LinkStrand:	          2,048	      5,956,311	0.003	1290
+LinkStrand:	          4,096	      7,277,271	0.004	1290
+LinkStrand:	          8,192	      9,919,191	0.006	1290
+LinkStrand:	         16,384	     15,203,031	0.004	1290
+LinkStrand:	         32,768	     25,770,711	0.003	1290
+LinkStrand:	         65,536	     46,906,071	0.004	1290
+LinkStrand:	        131,072	     89,176,791	0.005	1290
+LinkStrand:	        262,144	    173,718,231	0.004	1290
+LinkStrand:	        524,288	    342,801,111	0.003	1290
+LinkStrand:	      1,048,576	    680,966,871	0.003	1290
+LinkStrand:	      2,097,152	  1,357,298,391	0.004	1290
+LinkStrand:	      4,194,304	  2,709,961,431	0.003	1290
+LinkStrand:	      8,388,608	  5,415,287,511	0.006	1290
+LinkStrand:	     16,777,216	 10,825,939,671	0.005	1290
+LinkStrand:	     33,554,432	 21,647,243,991	0.006	1290
+LinkStrand:	     67,108,864	 43,289,852,631	0.005	1290
+LinkStrand:	    134,217,728	 86,575,069,911	0.006	1290
+LinkStrand:	    268,435,456	173,145,504,471	0.008	1290
+LinkStrand:	    536,870,912	346,286,373,591	0.005	1290
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at java.base/java.util.Arrays.copyOf(Arrays.java:3744)
+	at java.base/java.lang.AbstractStringBuilder.ensureCapacityInternal(AbstractStringBuilder.java:146)
+	at java.base/java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:512)
+	at java.base/java.lang.StringBuilder.append(StringBuilder.java:141)
+	at DNABenchmark.main(DNABenchmark.java:110)
+
+
+
+
+Question 1: are the benchmark timings for StringStrand consistent with the explanation below that the time to execute cutAndSplice is O(b2S)? 
+
+Note that the value of b is half the number of calls to append since each cut (except the first) is modeled by two calls of append in the method cutAndSplice -- see the code. This means that b2 will be constant in the benchmark, but S will vary. 
+
+
+
+The benchmark timings for StringStrand are consistent with the explanation below as when S doubles, the time doubles as well for a constant b2. At the same time, the benchmark timings for StringStrand are much greater than the benchmark timings for the other classes, such as StringBuilderStrand, which has a time of O(bS), with the only difference in times being a factor of b. Hence, the times of StringStrand are greater by a factor of b, providing more support to the proposed time of StringStrand.
+
+
+
+
+
+Question 2: are the benchmark timings for StringBuilderStrand consistent with the explanation below that the time to execute cutAndSplice is O(bS)? 
+
+Note that the value of b is half the number of calls to append since each cut (except the first) is modeled by two calls of append in the method cutAndSplice -- see the code. This means that b will be constant in the benchmark, but S will vary. 
+
+
+The benchmark timings for StringBuilderStrand are consistent with the explanation below as when S doubles, the time nearly doubles as well such as when S is over 173 million to when it is over 342 million, which is a factor of 2, the time increases from 0.169 sec to 0.299 sec, which is almost double. The times are much smaller than the corresponding times in StringStrand, which provide support to the proposed runtime as StringStrand has the same runtime as StringBuilderStrand multiplied by b and bS < b2S.
+
+
+
+
+Question 3: Explain why the time for LinkStrand does not change much at all over all the runs in the benchmark program. Explain why you think memory is exhausted at the specific strand size you see in your timings -- as compared to exhaustion for String and StringBuilder.
+
+
+The time for LinkStrand does not change much at all because LinkedLists are significantly faster to append a new node to, as the amount of memory needed is almost constant since various nodes can point to the same String. Instead of needing to create a new String every time or mutating a current String, LinkStrand just adds a node pointing to a String, and when a String is being spliced in, that same String can be referenced by multiple nodes. The memory becomes exhausted at that specific size when the strand takes up too much memory. If the strand is not too big by itself, the LinkStrand can utilize it, as multiple nodes point to the same String. This allows the memory to be exhausted at a much greater strand size than the other classes.
