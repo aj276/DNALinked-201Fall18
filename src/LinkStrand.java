@@ -33,6 +33,7 @@ public class LinkStrand implements IDnaStrand {
 	public void initialize(String source) {
 		// TODO Auto-generated method stub
 		myFirst = new Node(source);
+		myLast = null;
 		myAppends = 0;
 		mySize+=source.length();
 		myIndex = 0;
